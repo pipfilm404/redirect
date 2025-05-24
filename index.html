@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переход на Telegram канал</title>
+    <!-- Мгновенный редирект -->
+    <script>
+        // Получаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const params = Array.from(urlParams.entries())
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&');
+        
+        // Формируем URL для редиректа с сохранением параметров
+        const redirectUrl = `https://t.me/ebathalava${params ? '?' + params : ''}`;
+        
+        // Устанавливаем meta refresh для мгновенного редиректа
+        document.write(`<meta http-equiv="refresh" content="0;url=${redirectUrl}">`);
+    </script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        // Используем уже полученные параметры
+        const source = urlParams.get('utm_source') || 'direct';
+        const batch = urlParams.get('batch') || 'unknown'; // Номер партии
+        const location = urlParams.get('location') || 'unknown'; // Место размещения
+        
+        // Выбираем счетчик в зависимости от источника
+        let counterId;
+        switch(source) {
+            case 'qr_batch_1':
+                counterId = 123456789; // ID счетчика для первой партии
+                break;
+            case 'qr_batch_2':
+                counterId = 987654321; // ID счетчика для второй партии
+                break;
+            case 'qr_batch_3':
+                counterId = 456789123; // ID счетчика для третьей партии
+                break;
+            default:
+                counterId = 111222333; // ID счетчика по умолчанию
+        }
+
+        ym(counterId, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            params: {
+                utm_source: source,
+                utm_medium: 'qr_code',
+                utm_campaign: batch,
+                batch: batch,
+                location: location,
+                qr_id: urlParams.get('qr_id') || 'unknown' // Уникальный ID QR-кода
+            }
+        });
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/111222333" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body>
+    <script>
+        // Запасной вариант редиректа через JavaScript
+        if (!document.referrer) {
+            window.location.href = redirectUrl;
+        }
+    </script>
+    <p>Если вы не были автоматически перенаправлены, <a href="https://t.me/ebathalava">нажмите здесь</a>.</p>
+</body>
+</html> 
